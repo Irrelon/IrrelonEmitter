@@ -1,6 +1,6 @@
 {
   "name": "Emitter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A flexible event emitter for Arduino and other C/C++ platforms.",
   "keywords": ["irrelon", "event", "emitter", "emit"],
   "repository": {

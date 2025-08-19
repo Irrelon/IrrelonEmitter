@@ -21,8 +21,8 @@ namespace Irrelon {
         if (logger()) logger()(lvl, msg);
     }
 
-    using EventCallback         = std::function<void(const DynaVal&)>;
-    using WildcardEventCallback = std::function<void(std::string eventName, const DynaVal&)>;
+    using EventCallback         = std::function<void(const Irrelon::DynaVal&)>;
+    using WildcardEventCallback = std::function<void(std::string eventName, const Irrelon::DynaVal&)>;
 
     class Emitter {
     public:
@@ -32,7 +32,7 @@ namespace Irrelon {
         // Register a listener for a specific event
         Token on(std::string eventName, EventCallback listener) {
             // Wrap to wildcard signature; avoid extra string copies at call time
-            WildcardEventCallback wrapped = [cb = std::move(listener)](std::string, const DynaVal& data) {
+            WildcardEventCallback wrapped = [cb = std::move(listener)](std::string, const Irrelon::DynaVal& data) {
                 cb(data);
             };
             auto& vec = listeners_[eventName];
@@ -51,7 +51,7 @@ namespace Irrelon {
         Token once(std::string eventName, EventCallback listener) {
             // Store token externally so we can remove after first call
             Token tok;
-            WildcardEventCallback wrapped = [this, listener = std::move(listener), tok](std::string en, const DynaVal& d) mutable {
+            WildcardEventCallback wrapped = [this, listener = std::move(listener), tok](std::string en, const Irrelon::DynaVal& d) mutable {
                 // Invoke
                 listener(d);
                 // Unsubscribe self
@@ -75,7 +75,7 @@ namespace Irrelon {
         }
 
         // Emit an event
-        void emit(std::string eventName, const DynaVal& data = {}) {
+        void emit(std::string eventName, const Irrelon::DynaVal& data = {}) {
             // Exact listeners
             if (auto it = listeners_.find(std::string(eventName)); it != listeners_.end()) {
                 callListeners(eventName, it->second, data);
@@ -108,7 +108,7 @@ namespace Irrelon {
         static void callListeners(
             std::string eventName,
             const std::vector<WildcardEventCallback>& list,
-            const DynaVal& data
+            const Irrelon::DynaVal& data
         ) {
             // Iterate over a snapshot to avoid re-entrancy issues mutating the same vector
             for (const auto& cb : list) {
