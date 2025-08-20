@@ -3,7 +3,7 @@ A C++ library for creating and using an event emitter.
 
 ## Usage
 ```c++
-#include <IrrelonEmitter.h>
+#include <Irrelon/Emitter.h>
 
 Irrelon::Emitter emitter;
 emitter.on("myEventName", [](DynaVal args){
