@@ -1,0 +1,17 @@
+{
+  "name": "emitter",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "src": "src",
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "pio run -e local -t clean && pio test -e local --without-uploading -vv",
+    "lldb": "lldb .pio/build/local/program"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
